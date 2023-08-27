@@ -2,8 +2,10 @@ package com.linkjf.climita.remote.mapper
 
 import com.linkjf.climita.data.models.LocationEntity
 import com.linkjf.climita.remote.models.LocationSearchResponseItem
+import javax.inject.Inject
 
-class LocationEntityMapper : EntityMapper<LocationSearchResponseItem, LocationEntity> {
+class LocationEntityMapper @Inject constructor() :
+    EntityMapper<LocationSearchResponseItem, LocationEntity> {
     override fun mapFromModel(model: LocationSearchResponseItem): LocationEntity {
         return LocationEntity(
             country = model.country,

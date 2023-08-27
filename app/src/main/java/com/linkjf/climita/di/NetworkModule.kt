@@ -1,7 +1,9 @@
 package com.linkjf.climita.di
 
 import com.linkjf.climita.BuildConfig
+import com.linkjf.climita.data.repository.LocationSearchRemote
 import com.linkjf.climita.remote.api.LocationSearchService
+import com.linkjf.climita.remote.repository.LocationSearchRemoteImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,4 +43,11 @@ object NetworkModule {
     fun provideLocationSearchService(retrofit: Retrofit): LocationSearchService {
         return retrofit.create(LocationSearchService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideLocationSearchRemote(
+        locationSearchRemote: LocationSearchRemoteImp
+    ): LocationSearchRemote =
+        locationSearchRemote
 }
