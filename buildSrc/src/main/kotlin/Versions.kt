@@ -11,10 +11,16 @@ object Versions {
     const val lifecycleRuntimeVersion = "2.6.1"
 
     // Compose dependencies
+    const val composeUiVersion = "1.4.3"
+    const val composeMaterial3Version = "1.0.1"
     const val activityComposeVersion = "1.7.2"
     const val composeBomVersion = "2023.03.00"
     const val viewmodelComposeVersion = "2.6.1"
     const val composeLiveDataVersion = "1.5.0"
+    const val composeAccompanistVersion = "0.30.1"
+
+    // Compose navigation dependencies
+    const val composeNavigationVersion = "2.6.0"
 
     // Coroutine dependencies
     const val androidCoroutineVersion = "1.6.4"
@@ -23,6 +29,7 @@ object Versions {
     const val daggerHiltPluginVersion = "2.44"
     const val hiltAndroidVersion = "2.44"
     const val hiltAndroidCompilerVersion = "2.44"
+    const val hiltNavigationCompose = "1.0.0"
 
     // Retrofit dependencies
     const val retrofitVersion = "2.9.0"

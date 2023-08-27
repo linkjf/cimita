@@ -22,20 +22,26 @@ object Dependencies {
             "androidx.activity:activity-compose:${Versions.activityComposeVersion}"
         const val composeBoom =
             "androidx.compose:compose-bom:${Versions.composeBomVersion}"
-        const val composeUI = "androidx.compose.ui:ui"
-        const val composeGraphics = "androidx.compose.ui:ui-graphics"
-        const val composeUiPreview = "androidx.compose.ui:ui-tooling-preview"
-        const val composeMaterial3 = "androidx.compose.material3:material3"
+        const val composeUI = "androidx.compose.ui:ui:${Versions.composeUiVersion}"
+        const val composeGraphics = "androidx.compose.ui:ui-graphics:${Versions.composeUiVersion}"
+        const val composeUiPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.composeUiVersion}"
+        const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.composeMaterial3Version}"
+        const val composeNavigation =
+            "androidx.navigation:navigation-compose:${Versions.composeNavigationVersion}"
+        const val composeAccompanist = "com.google.accompanist:accompanist-systemuicontroller:${Versions.composeAccompanistVersion}"
     }
 
     object CoroutineDep {
-        const val courotines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.androidCoroutineVersion}"
+        const val courotines =
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.androidCoroutineVersion}"
     }
 
     object HiltDep {
         const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hiltAndroidVersion}"
         const val hiltAndroidCompiler =
             "com.google.dagger:hilt-android-compiler:${Versions.hiltAndroidCompilerVersion}"
+        const val hiltNavigationCompose =
+            "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
     }
 
     object RetrofitDep {

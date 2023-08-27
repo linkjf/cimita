@@ -73,12 +73,15 @@ dependencies {
         implementation(it)
     }
 
+    implementation(AppDependencies.composeNavigation)
+
     AppDependencies.lifeCycle.forEach {
         implementation(it)
     }
 
     implementation(AppDependencies.coroutines)
     implementation(AppDependencies.hilt)
+    implementation(AppDependencies.hiltNavigationCompose)
     kapt(AppDependencies.kaptHiltCompiler)
 
     AppDependencies.retrofit.forEach {

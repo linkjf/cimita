@@ -19,10 +19,13 @@ object AppDependencies {
         Dependencies.ComposeDep.composeMaterial3
     )
 
-     const val coroutines = Dependencies.CoroutineDep.courotines
+    const val composeNavigation = Dependencies.ComposeDep.composeNavigation
+
+    const val coroutines = Dependencies.CoroutineDep.courotines
 
     const val hilt = Dependencies.HiltDep.hiltAndroid
     const val kaptHiltCompiler = Dependencies.HiltDep.hiltAndroidCompiler
+    const val hiltNavigationCompose = Dependencies.HiltDep.hiltNavigationCompose
 
     val retrofit = listOf(
         Dependencies.RetrofitDep.retrofit,
