@@ -28,6 +28,10 @@ object Dependencies {
         const val composeMaterial3 = "androidx.compose.material3:material3"
     }
 
+    object CoroutineDep {
+        const val courotines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.androidCoroutineVersion}"
+    }
+
     object HiltDep {
         const val hiltAndroid = "com.google.dagger:hilt-android:${Versions.hiltAndroidVersion}"
         const val hiltAndroidCompiler =

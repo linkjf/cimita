@@ -16,6 +16,9 @@ object Versions {
     const val viewmodelComposeVersion = "2.6.1"
     const val composeLiveDataVersion = "1.5.0"
 
+    // Coroutine dependencies
+    const val androidCoroutineVersion = "1.6.4"
+
     // Hilt dependencies
     const val daggerHiltPluginVersion = "2.44"
     const val hiltAndroidVersion = "2.44"

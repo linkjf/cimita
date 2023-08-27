@@ -24,6 +24,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        // Configs
+        buildConfigField("String", "BASE_URL", "\"" + Environments.Release.baseUrl + "\"")
+        buildConfigField("String", "API_KEY", "\"" + Environments.Release.apiKey + "\"")
     }
 
     buildTypes {
@@ -56,6 +60,8 @@ android {
     kapt {
         correctErrorTypes = true
     }
+
+    android.buildFeatures.buildConfig = true
 }
 
 dependencies {
@@ -71,6 +77,7 @@ dependencies {
         implementation(it)
     }
 
+    implementation(AppDependencies.coroutines)
     implementation(AppDependencies.hilt)
     kapt(AppDependencies.kaptHiltCompiler)
 
