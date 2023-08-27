@@ -1,16 +1,19 @@
 package com.linkjf.climita.presentation.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,6 +33,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.linkjf.climita.presentation.ui.theme.grey80
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,44 +53,47 @@ fun <T> AutoCompleteUI(
     val view = LocalView.current
     val lazyListState = rememberLazyListState()
 
-    LazyColumn(
-        state = lazyListState,
-        modifier = modifier.heightIn(max = TextFieldDefaults.MinHeight * 6)
-    ) {
+    Column {
 
-        item {
-            QuerySearch(
-                query = query,
-                label = queryLabel,
-                colors = colors,
-                onQueryChanged = onQueryChanged,
-                onDoneActionClick = {
-                    view.clearFocus()
-                    onDoneActionClick()
-                },
-                onClearClick = {
-                    onClearClick()
-                }
-            )
-        }
+        QuerySearch(
+            query = query,
+            label = queryLabel,
+            colors = colors,
+            onQueryChanged = onQueryChanged,
+            onDoneActionClick = {
+                view.clearFocus()
+                onDoneActionClick()
+            },
+            onClearClick = {
+                onClearClick()
+            }
+        )
 
-        if (predictions.isNotEmpty()) {
-            items(predictions.size) { predictionIndex ->
-                Row(
-                    Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                        .clickable {
-                            view.clearFocus()
-                            onItemClick(predictions[predictionIndex])
-                        }
-                ) {
-                    itemContent(predictions[predictionIndex])
+        LazyColumn(
+            state = lazyListState,
+            modifier = modifier.heightIn(max = TextFieldDefaults.MinHeight * 6)
+        ) {
+            if (predictions.isNotEmpty()) {
+                items(predictions.size) { predictionIndex ->
+                    if (predictionIndex > 0)
+                        Divider(color = grey80, thickness = 2.dp)
+                    Row(
+                        Modifier
+                            .padding(8.dp)
+                            .fillMaxWidth()
+                            .clickable {
+                                view.clearFocus()
+                                onItemClick(predictions[predictionIndex])
+                            }
+                    ) {
+                        itemContent(predictions[predictionIndex])
+                    }
                 }
+            } else {
+
             }
         }
     }
-
 
 }
 
@@ -112,6 +119,7 @@ fun QuerySearch(
             .onFocusChanged { focusState ->
                 showClearButton = focusState.isFocused
             },
+        shape = RoundedCornerShape(90.dp),
         value = query,
         onValueChange = onQueryChanged,
         label = { Text(text = label) },

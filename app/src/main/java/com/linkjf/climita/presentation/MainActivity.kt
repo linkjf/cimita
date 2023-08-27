@@ -9,12 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.core.view.WindowCompat
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.linkjf.climita.presentation.navigation.AppNavigation
 import com.linkjf.climita.presentation.search.LocationSearchViewModel
-import com.linkjf.climita.ui.theme.ClimitaTheme
+import com.linkjf.climita.presentation.ui.theme.ClimitaTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

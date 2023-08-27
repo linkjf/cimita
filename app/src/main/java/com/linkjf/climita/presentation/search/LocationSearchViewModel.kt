@@ -23,9 +23,14 @@ class LocationSearchViewModel @Inject constructor(
 
     fun getLocationPredictions(query: String) {
         _query.value = query
+        if (query.isEmpty()) return
+
         viewModelScope.launch {
-            useCase(query).collect {
-                _locationPredictions.postValue(it)
+            useCase(query).collect { locations ->
+                if (locations.isNotEmpty())
+                    _locationPredictions.postValue(locations)
+                else
+                    emptyList<Location>()
             }
         }
 

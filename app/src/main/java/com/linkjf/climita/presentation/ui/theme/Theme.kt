@@ -1,4 +1,4 @@
-package com.linkjf.climita.ui.theme
+package com.linkjf.climita.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
