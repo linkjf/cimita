@@ -1,6 +1,6 @@
 package com.linkjf.climita.remote.models
 
-data class LocationSearchResponseItem(
+data class LocationResponse(
     val country: String,
     val id: Int,
     val lat: Double,

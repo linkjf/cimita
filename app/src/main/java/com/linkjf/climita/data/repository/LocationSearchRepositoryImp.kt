@@ -6,6 +6,7 @@ import com.linkjf.climita.domain.models.Location
 import com.linkjf.climita.domain.repository.LocationSearchRepository
 import com.linkjf.climita.remote.common.Result
 import com.linkjf.climita.remote.common.Result.Error
+import com.linkjf.climita.remote.common.Result.Exception
 import com.linkjf.climita.remote.common.Result.Success
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,13 +20,27 @@ class LocationSearchRepositoryImp @Inject constructor(
         val result =
             locationSearchRemoteDataSource.getLocations(query)
 
-        if (result is Success) {
-            val locationList = result.data.map { locationEntity ->
-                mapper.mapFromEntity(locationEntity)
+        when (result) {
+            is Success -> {
+                val locationList = result.data.map { locationEntity ->
+                    mapper.mapFromEntity(locationEntity)
+                }
+                emit(Success(locationList))
             }
-            emit(Success(locationList))
-        } else
-            emit(Error(-1, null))
+
+            is Error -> emit(
+                Error(
+                    code = result.code,
+                    message = result.message
+                )
+            )
+
+            is Exception -> emit(
+                Exception(
+                    e = result.e
+                )
+            )
+        }
     }
 
 
