@@ -89,8 +89,6 @@ fun <T> AutoCompleteUI(
                         itemContent(predictions[predictionIndex])
                     }
                 }
-            } else {
-
             }
         }
     }
