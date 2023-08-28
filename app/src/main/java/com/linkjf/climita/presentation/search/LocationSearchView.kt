@@ -18,13 +18,12 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -33,23 +32,18 @@ import com.linkjf.climita.R
 import com.linkjf.climita.domain.models.Location
 import com.linkjf.climita.presentation.components.AutoCompleteUI
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun LocationSearchView(
     viewModel: LocationSearchViewModel = viewModel()
 ) {
 
-    var cityName by remember {
-        mutableStateOf("")
-    }
-    var query by remember {
-        mutableStateOf("")
-    }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
+    val locationQuery by viewModel.query.observeAsState("")
     val showLoading by viewModel.isLoading.observeAsState(initial = false)
     val showEmpty by viewModel.showEmpty.observeAsState(initial = false)
     val showError by viewModel.showError.observeAsState(initial = false)
-
     val predictions by viewModel.locationPredictions.observeAsState(initial = emptyList())
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -82,11 +76,10 @@ fun LocationSearchView(
                 AutoCompleteUI<Location>(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    query = query,
+                    query = locationQuery,
                     queryLabel = stringResource(id = R.string.search_label),
                     onQueryChanged = { updatedQuery ->
-                        query = updatedQuery
-                        viewModel.getLocationPredictions(query)
+                        viewModel.getLocationPredictions(updatedQuery)
                     },
                     predictions = predictions,
                     colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -95,8 +88,16 @@ fun LocationSearchView(
                         placeholderColor = Color.White,
                         unfocusedLabelColor = Color.White,
                         focusedLabelColor = Color.White,
-
-                        )
+                    ),
+                    onClearClick = {
+                        viewModel.clear()
+                    },
+                    onDoneActionClick = {
+                        keyboardController?.hide()
+                    },
+                    onItemClick = {
+                        keyboardController?.hide()
+                    }
                 ) {
                     Text(
                         text = "${it.name}, ${it.country}",

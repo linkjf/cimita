@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -128,7 +129,11 @@ fun QuerySearch(
                 IconButton(onClick = {
                     onClearClick()
                 }) {
-                    Icon(imageVector = Icons.Filled.Close, contentDescription = "Clear")
+                    Icon(
+                        imageVector = Icons.Filled.Close,
+                        tint = Color.White,
+                        contentDescription = "Clear"
+                    )
                 }
             }
         },

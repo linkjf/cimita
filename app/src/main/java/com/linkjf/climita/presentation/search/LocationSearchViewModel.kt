@@ -62,6 +62,10 @@ class LocationSearchViewModel @Inject constructor(
                 }
             }
         }
+    }
 
+    fun clear() {
+        _query.postValue("")
+        _locationPredictions.postValue(emptyList())
     }
 }
