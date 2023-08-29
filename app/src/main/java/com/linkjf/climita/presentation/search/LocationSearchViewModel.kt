@@ -64,6 +64,26 @@ class LocationSearchViewModel @Inject constructor(
 
                     is Result.Error -> _showError.postValue(true)
                     is Result.Exception -> _showError.postValue(true)
+                }
+            }
+        }
+    }
+
+    fun getForecast(location: Location) {
+
+        viewModelScope.launch {
+            val locationString = "${location.name}, ${location.country}"
+            val forecastDays = 3
+            val request = Pair(locationString, forecastDays)
+            forecastUseCase.invoke(request).collect { forecastResult ->
+
+                when (forecastResult) {
+                    is Result.Success -> {
+                        _forecast.postValue(forecastResult.data)
+                    }
+
+                    is Result.Error -> _showError.postValue(true)
+                    is Result.Exception -> _showError.postValue(true)
 
                 }
             }

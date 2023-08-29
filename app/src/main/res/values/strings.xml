@@ -3,4 +3,6 @@
     <string name="search_label">Search Your Destiny</string>
     <string name="empty_label">No city found for this query.</string>
     <string name="error_label">Search error, try again later.</string>
+
+    <string name="temperature_format">%1$d°C</string>
 </resources>

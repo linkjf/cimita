@@ -13,8 +13,6 @@ class LocationEntityMapper @Inject constructor() :
             lat = model.lat,
             lon = model.lon,
             name = model.name,
-            region = model.region,
-            url = model.url
-        )
+            region = model.region)
     }
 }

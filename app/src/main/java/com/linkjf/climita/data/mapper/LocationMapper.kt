@@ -13,8 +13,7 @@ class LocationMapper @Inject constructor() : Mapper<LocationEntity, Location> {
             lat = entity.lat,
             lon = entity.lon,
             name = entity.name,
-            region = entity.region,
-            url = entity.url
+            region = entity.region
         )
     }
 
@@ -25,8 +24,7 @@ class LocationMapper @Inject constructor() : Mapper<LocationEntity, Location> {
             lat = model.lat,
             lon = model.lon,
             name = model.name,
-            region = model.region,
-            url = model.url
+            region = model.region
         )
     }
 }

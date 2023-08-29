@@ -31,6 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.linkjf.climita.R
 import com.linkjf.climita.domain.models.Location
 import com.linkjf.climita.presentation.components.AutoCompleteUI
+import com.linkjf.climita.presentation.forecast.ForecastView
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -44,7 +45,9 @@ fun LocationSearchView(
     val showLoading by viewModel.isLoading.observeAsState(initial = false)
     val showEmpty by viewModel.showEmpty.observeAsState(initial = false)
     val showError by viewModel.showError.observeAsState(initial = false)
+
     val predictions by viewModel.locationPredictions.observeAsState(initial = emptyList())
+    val forecast by viewModel.forecast.observeAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -61,7 +64,7 @@ fun LocationSearchView(
         ) {
             Spacer(modifier = Modifier.height(32.dp))
             Image(
-                painter = painterResource(id = R.drawable.ic_app_logo),
+                painter = painterResource(id = R.drawable.ic_app_icon_transparent),
                 contentDescription = "Climita Logo",
                 modifier = Modifier
                     .height(60.dp)
@@ -97,17 +100,24 @@ fun LocationSearchView(
                     },
                     onItemClick = {
                         keyboardController?.hide()
+                        viewModel.clear()
+                        viewModel.getForecast(it)
                     }
                 ) {
                     Text(
                         text = "${it.name}, ${it.country}",
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier
                             .fillMaxWidth()
                             .background(Color.Transparent)
 
                     )
                 }
+
+                forecast?.let {
+                    ForecastView(forecast = it)
+                }
+
                 ShowEmptyResult(showEmpty)
                 ShowError(show = showError)
             }
@@ -120,7 +130,7 @@ private fun ShowEmptyResult(show: Boolean) {
     if (show)
         Text(
             text = stringResource(id = R.string.empty_label),
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp, horizontal = 10.dp)

@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface ForecastService {
 
-    @GET("search.json")
+    @GET("forecast.json")
     suspend fun getForecast(
         @Query("key") key: String,
         @Query("q") query: String,
