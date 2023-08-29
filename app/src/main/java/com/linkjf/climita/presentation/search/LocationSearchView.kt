@@ -18,6 +18,9 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -32,6 +35,7 @@ import com.linkjf.climita.R
 import com.linkjf.climita.domain.models.Location
 import com.linkjf.climita.presentation.components.AutoCompleteUI
 import com.linkjf.climita.presentation.forecast.ForecastView
+import java.text.SimpleDateFormat
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -40,6 +44,9 @@ fun LocationSearchView(
 ) {
 
     val keyboardController = LocalSoftwareKeyboardController.current
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+    var selectedIndex by remember { mutableIntStateOf(0) }
 
     val locationQuery by viewModel.query.observeAsState("")
     val showLoading by viewModel.isLoading.observeAsState(initial = false)
@@ -70,56 +77,65 @@ fun LocationSearchView(
                     .height(60.dp)
                     .width(50.dp)
             )
-            Column(
-                modifier = Modifier.padding(
-                    horizontal = 20.dp,
-                    vertical = 20.dp
-                )
-            ) {
-                AutoCompleteUI<Location>(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    query = locationQuery,
-                    queryLabel = stringResource(id = R.string.search_label),
-                    onQueryChanged = { updatedQuery ->
-                        viewModel.getLocationPredictions(updatedQuery)
-                    },
-                    predictions = predictions,
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = Color.White,
-                        textColor = Color.White,
-                        placeholderColor = Color.White,
-                        unfocusedLabelColor = Color.White,
-                        focusedLabelColor = Color.White,
-                    ),
-                    onClearClick = {
-                        viewModel.clear()
-                    },
-                    onDoneActionClick = {
-                        keyboardController?.hide()
-                    },
-                    onItemClick = {
-                        keyboardController?.hide()
-                        viewModel.clear()
-                        viewModel.getForecast(it)
-                    }
-                ) {
-                    Text(
-                        text = "${it.name}, ${it.country}",
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(Color.Transparent)
-
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        horizontal = 20.dp,
+                        vertical = 10.dp
                     )
+            ) {
+
+                Column(
+                    modifier = Modifier.padding(top = 120.dp)
+                ) {
+                    forecast?.let {
+                        ForecastView(forecast = it)
+                    }
                 }
 
-                forecast?.let {
-                    ForecastView(forecast = it)
-                }
+                Column() {
+                    AutoCompleteUI<Location>(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        query = locationQuery,
+                        queryLabel = stringResource(id = R.string.search_label),
+                        onQueryChanged = { updatedQuery ->
+                            viewModel.getLocationPredictions(updatedQuery)
+                        },
+                        predictions = predictions,
+                        colors = TextFieldDefaults.outlinedTextFieldColors(
+                            focusedBorderColor = Color.White,
+                            textColor = Color.White,
+                            placeholderColor = Color.White,
+                            unfocusedLabelColor = Color.White,
+                            focusedLabelColor = Color.White,
+                        ),
+                        onClearClick = {
+                            viewModel.clear()
+                        },
+                        onDoneActionClick = {
+                            keyboardController?.hide()
+                        },
+                        onItemClick = {
+                            keyboardController?.hide()
+                            viewModel.clear()
+                            viewModel.getForecast(it)
+                        }
+                    ) {
 
-                ShowEmptyResult(showEmpty)
-                ShowError(show = showError)
+                        Text(
+                            text = "${it.name}, ${it.country}",
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                        )
+                    }
+
+                    ShowEmptyResult(showEmpty)
+                    ShowError(show = showError)
+                }
             }
         }
     }

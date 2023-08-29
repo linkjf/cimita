@@ -1,11 +1,11 @@
 package com.linkjf.climita.presentation.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -34,6 +34,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.linkjf.climita.presentation.ui.theme.grey
 import com.linkjf.climita.presentation.ui.theme.grey80
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,19 +70,17 @@ fun <T> AutoCompleteUI(
                 onClearClick()
             }
         )
-
+        Divider(color = Color.Transparent, thickness = 10.dp)
         LazyColumn(
             state = lazyListState,
             modifier = modifier.heightIn(max = TextFieldDefaults.MinHeight * 6)
         ) {
             if (predictions.isNotEmpty()) {
                 items(predictions.size) { predictionIndex ->
-                    if (predictionIndex > 0)
-                        Divider(color = grey80, thickness = 2.dp)
                     Row(
                         Modifier
-                            .padding(8.dp)
                             .fillMaxWidth()
+                            .background(grey)
                             .clickable {
                                 view.clearFocus()
                                 onItemClick(predictions[predictionIndex])
@@ -89,6 +88,7 @@ fun <T> AutoCompleteUI(
                     ) {
                         itemContent(predictions[predictionIndex])
                     }
+                    Divider(color = grey80, thickness = 2.dp)
                 }
             }
         }

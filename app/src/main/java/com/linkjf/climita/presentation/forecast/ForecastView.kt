@@ -40,7 +40,7 @@ import java.text.SimpleDateFormat
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ForecastView(
-    forecast: Forecast
+    forecast: Forecast,
 ) {
 
     val dateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -101,8 +101,6 @@ private fun ForecastItemView(
     val alpha = if (isSelected) 1f else 0.2f
     val color = if (isSelected) white50 else white20
 
-    val containerHeight = if (isSelected) 100.dp else 70.dp
-
     val dayTextStyle =
         if (isSelected)
             MaterialTheme.typography.titleMedium
@@ -149,7 +147,7 @@ private fun ForecastItemView(
 
     ) {
         val date = dateFormat.parse(forecastDay.date)
-        var dayString = DateFormat.format("EEE", date).toString().uppercase()
+        val dayString = DateFormat.format("EEE", date).toString().uppercase()
         Text(
             text = dayString,
             style = dayTextStyle,
