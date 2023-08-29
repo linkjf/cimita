@@ -106,6 +106,8 @@ dependencies {
     annotationProcessor(AppDependencies.glideAnnotation)
 
     testImplementation(AppDependencies.Test.junit)
+    testImplementation(AppDependencies.Test.mockitoKotlin)
+    testImplementation(AppDependencies.Test.mockitoInline)
     androidTestImplementation(AppDependencies.Test.exTestJunit)
     androidTestImplementation(AppDependencies.Test.espresso)
     androidTestImplementation(platform(AppDependencies.Test.composeBoomTest))

@@ -61,6 +61,10 @@ object Dependencies {
 
     object TestDep {
         const val junit = "junit:junit:${Versions.junitVersion}"
+        const val mockitoKotlin =
+            "org.mockito.kotlin:mockito-kotlin:${Versions.mockitoKotlinVersion}"
+        const val mockitoInline = "org.mockito:mockito-inline:${Versions.mockitoInlineVersion}"
+
         const val exTestJunit = "androidx.test.ext:junit:${Versions.exTestJunitVersion}"
         const val espresso = "androidx.test.espresso:espresso-core:${Versions.espressoVersion}"
         const val composeBoomTest =

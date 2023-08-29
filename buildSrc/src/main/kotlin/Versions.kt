@@ -46,5 +46,7 @@ object Versions {
     const val exTestJunitVersion = "1.1.5"
     const val espressoVersion = "3.5.1"
     const val composeBoomTestVersion = "2023.03.00"
+    const val mockitoInlineVersion = "5.1.0"
+    const val mockitoKotlinVersion = "5.1.0"
 }
 

@@ -42,6 +42,8 @@ object AppDependencies {
 
     object Test {
         const val junit = Dependencies.TestDep.junit
+        const val mockitoKotlin = Dependencies.TestDep.mockitoKotlin
+        const val mockitoInline = Dependencies.TestDep.mockitoInline
         const val exTestJunit = Dependencies.TestDep.exTestJunit
         const val espresso = Dependencies.TestDep.espresso
         const val composeBoomTest = Dependencies.TestDep.composeBoomTest
