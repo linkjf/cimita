@@ -45,6 +45,13 @@ To build and run Climita on your local machine, follow these steps:
 - **Glide:** Image loading and caching for smooth image display.
 - **Retrofit:** HTTP client for making network requests.
 
+## TODO
+
+- Improve user experience with a load state
+- Add landscape, tablet and foldable support
+- Add Spanish location
+- Add accessibility screen reader features
+
 # Credits
 
 - Design by [Carlos Loaiza]()
