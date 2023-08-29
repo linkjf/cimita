@@ -16,7 +16,7 @@ class ForecastRemoteImp @Inject constructor(
 ) : ForecastRemote {
 
     override suspend fun getForecast(query: String, forecastDays: Int): Result<ForecastEntity> {
-        val apiKey = BuildConfig.API_KEY
+        val apiKey = BuildConfig.WEATHER_API_KEY
         val result = safeRequest {
             forecastService.getForecast(apiKey, query, forecastDays)
         }

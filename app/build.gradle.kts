@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import dependencies.AppDependencies
 
 plugins {
@@ -25,9 +26,20 @@ android {
             useSupportLibrary = true
         }
 
+        val apiKey: String =
+            gradleLocalProperties(rootDir).getProperty(Environments.Release.apiValueKey)
+
         // Configs
-        buildConfigField("String", "BASE_URL", "\"" + Environments.Release.baseUrl + "\"")
-        buildConfigField("String", "API_KEY", "\"" + Environments.Release.apiKey + "\"")
+        buildConfigField(
+            "String",
+            Environments.Release.baseUrlValueKey,
+            "\"" + Environments.Release.baseUrl + "\""
+        )
+        buildConfigField(
+            "String",
+            Environments.Release.apiValueKey,
+            "\"" + apiKey + "\""
+        )
     }
 
     buildTypes {

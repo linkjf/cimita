@@ -15,7 +15,7 @@ class LocationSearchRemoteImp @Inject constructor(
     private val locationEntityMapper: LocationEntityMapper
 ) : LocationSearchRemote {
     override suspend fun getLocations(query: String): Result<List<LocationEntity>> {
-        val apiKey = BuildConfig.API_KEY
+        val apiKey = BuildConfig.WEATHER_API_KEY
         val result = safeRequest {
             locationSearchService.searchLocation(apiKey, query)
         }
