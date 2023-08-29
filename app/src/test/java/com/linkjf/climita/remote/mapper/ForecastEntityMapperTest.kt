@@ -36,7 +36,7 @@ class ForecastEntityMapperTest {
     }
 
     @Test
-    fun `given a ForecastResponse when mapFromModel should return ForecastEntity `() = run { // Given
+    fun `given a ForecastResponse when mapFromModel should return ForecastEntity`() = run { // Given
         val responseModel = FakeRemoteData.getFakeForecastResponse()
         `when` (currentEntityMapper.mapFromModel(any())) doReturn FakeRemoteData.getFakeCurrentEntity()
         `when` (forecastDayEntityMapper.mapFromModel(any())) doReturn FakeRemoteData.getFakeForecastEntityList()
@@ -49,6 +49,4 @@ class ForecastEntityMapperTest {
         assertEquals(result.forecastList.size, 2)
         assertEquals(result.forecastList.size, 2)
     }
-
-
 }

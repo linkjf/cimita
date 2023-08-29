@@ -6,6 +6,12 @@ import com.linkjf.climita.data.models.DayEntity
 import com.linkjf.climita.data.models.ForecastDayEntity
 import com.linkjf.climita.data.models.ForecastEntity
 import com.linkjf.climita.data.models.LocationEntity
+import com.linkjf.climita.domain.models.Condition
+import com.linkjf.climita.domain.models.Current
+import com.linkjf.climita.domain.models.Day
+import com.linkjf.climita.domain.models.Forecast
+import com.linkjf.climita.domain.models.ForecastDay
+import com.linkjf.climita.domain.models.Location
 import com.linkjf.climita.remote.models.ConditionResponse
 import com.linkjf.climita.remote.models.CurrentResponse
 import com.linkjf.climita.remote.models.DayResponse
@@ -95,7 +101,6 @@ object FakeRemoteData {
     fun getFakeForecastEntityList(): List<ForecastDayEntity> {
         val forecastDay = getFakeForecastDayEntity()
         return listOf(forecastDay, forecastDay)
-
     }
 
     fun getFakeForecastDayEntity() = ForecastDayEntity(
@@ -116,6 +121,11 @@ object FakeRemoteData {
         text = "Condition"
     )
 
+    fun getFakeLocationEntityList(): List<LocationEntity> {
+        val locationEntity = getFakeLocationEntity()
+        return listOf(locationEntity, locationEntity)
+    }
+
     fun getFakeLocationEntity() =
         LocationEntity(
             country = "Colombia",
@@ -124,5 +134,50 @@ object FakeRemoteData {
             lon = 12.0,
             name = "Cartagena",
             region = "America"
+        )
+
+    fun getFakeLocation() = Location(
+        country = "Colombia",
+        id = 123,
+        lat = 12.0,
+        lon = 12.0,
+        name = "Cartagena",
+        region = "America"
+    )
+
+    fun getFakeCondition() = Condition(
+        code = 1,
+        icon = "icon",
+        text = "Condition"
+    )
+
+    fun getFakeDay() = Day(
+        averageTemperature = 40.0,
+        condition = getFakeCondition(),
+        maxTemperature = 50.0,
+        minTemperature = 20.0
+    )
+
+    fun getFakeForecastDay() = ForecastDay(
+        date = "2023-08-28",
+        day = getFakeDay()
+    )
+
+    fun getFakeForecastList(): List<ForecastDay> {
+        val forecastDay = getFakeForecastDay()
+        return listOf(forecastDay, forecastDay)
+    }
+
+    fun getFakeCurrent() =
+        Current(
+            condition = getFakeCondition(),
+            temperature = 40.0
+        )
+
+    fun getFakeForecast() =
+        Forecast(
+            current = getFakeCurrent(),
+            forecastList = getFakeForecastList(),
+            location = getFakeLocation()
         )
 }

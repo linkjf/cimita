@@ -2,6 +2,7 @@ package com.linkjf.climita.remote.mapper
 
 import com.linkjf.climita.remote.fakes.FakeRemoteData
 import junit.framework.TestCase
+import junit.framework.TestCase.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -36,8 +37,8 @@ class ForecastDayEntityMapperTest {
             val result = mapper.mapFromModel(responseModel)
 
             // Should
-            TestCase.assertEquals(result.size, 2)
-            TestCase.assertEquals(result[0].date, "2023-08-28")
-            TestCase.assertEquals(result[1].day.maxTemperature, 50.0)
+            assertEquals(result.size, 2)
+            assertEquals(result[0].date, "2023-08-28")
+            assertEquals(result[1].day.maxTemperature, 50.0)
         }
 }

@@ -40,5 +40,4 @@ class DayEntityMapperTest {
             TestCase.assertEquals(result.maxTemperature, 50.0)
             TestCase.assertEquals(result.averageTemperature, 40.0)
         }
-
 }

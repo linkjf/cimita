@@ -9,10 +9,10 @@ import com.linkjf.climita.remote.fakes.FakeRemoteData.fakeDays
 import com.linkjf.climita.remote.fakes.FakeRemoteData.fakeQuery
 import com.linkjf.climita.remote.mapper.ForecastEntityMapper
 import com.linkjf.climita.remote.models.ForecastResponse
-import junit.framework.TestCase
+import junit.framework.TestCase.*
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.instanceOf
-import org.hamcrest.MatcherAssert
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -60,14 +60,13 @@ class ForecastRemoteImpTest {
             val result = forecastRemote.getForecast(fakeQuery, fakeDays)
 
             // Then
-            MatcherAssert.assertThat(result, instanceOf(Success::class.java))
-            TestCase.assertEquals((result as Success).data.forecastList.size, 2)
+            assertThat(result, instanceOf(Success::class.java))
+            assertEquals((result as Success).data.forecastList.size, 2)
         }
 
     @Test
-    fun `getForecast whit a invalid query should return a ForecastResponse with no ForecastDayResponse`() =
+    fun `getForecast whit a invalid query should return a Error response`() =
         runBlocking {
-            val fakeResponse = FakeRemoteData.getFakeForecastResponse()
 
             // Given
             `when`(forecastService.getForecast(any(), any())) doReturn responseError
@@ -76,7 +75,7 @@ class ForecastRemoteImpTest {
             val result = forecastRemote.getForecast(fakeQuery, fakeDays)
 
             // Then
-            MatcherAssert.assertThat(result, instanceOf(Error::class.java))
-            TestCase.assertEquals((result as Error).code, 0)
+            assertThat(result, instanceOf(Error::class.java))
+            assertEquals((result as Error).code, 0)
         }
 }
