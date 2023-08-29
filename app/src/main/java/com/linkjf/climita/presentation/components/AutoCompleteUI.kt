@@ -83,7 +83,6 @@ fun <T> AutoCompleteUI(
                     Row(
                         Modifier
                             .fillMaxWidth()
-                            .background(grey)
                             .clickable {
                                 view.clearFocus()
                                 onItemClick(predictions[predictionIndex])

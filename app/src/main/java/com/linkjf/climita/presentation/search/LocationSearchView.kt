@@ -88,11 +88,13 @@ fun LocationSearchView(
                     )
             ) {
 
-                Column(
-                    modifier = Modifier.padding(top = forecastContainerTopPadding)
-                ) {
-                    forecast?.let {
-                        ForecastView(forecast = it)
+                if (locationQuery.isEmpty()) {
+                    Column(
+                        modifier = Modifier.padding(top = forecastContainerTopPadding)
+                    ) {
+                        forecast?.let {
+                            ForecastView(forecast = it)
+                        }
                     }
                 }
 
@@ -114,14 +116,14 @@ fun LocationSearchView(
                             focusedLabelColor = Color.White,
                         ),
                         onClearClick = {
-                            viewModel.clear()
+                            viewModel.clearPredictions()
                         },
                         onDoneActionClick = {
                             keyboardController?.hide()
                         },
                         onItemClick = {
                             keyboardController?.hide()
-                            viewModel.clear()
+                            viewModel.clearPredictions()
                             viewModel.getForecast(it)
                         }
                     ) {

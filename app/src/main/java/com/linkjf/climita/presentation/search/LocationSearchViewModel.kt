@@ -71,7 +71,7 @@ class LocationSearchViewModel @Inject constructor(
     }
 
     fun getForecast(location: Location) {
-
+        clearForecast()
         viewModelScope.launch {
             val locationString = "${location.name}, ${location.country}"
             val forecastDays = 3
@@ -91,8 +91,12 @@ class LocationSearchViewModel @Inject constructor(
         }
     }
 
-    fun clear() {
+    fun clearPredictions() {
         _query.postValue(/* value = */ emptyString)
         _locationPredictions.postValue(emptyList())
+    }
+
+    fun clearForecast() {
+        _forecast.postValue(null)
     }
 }
