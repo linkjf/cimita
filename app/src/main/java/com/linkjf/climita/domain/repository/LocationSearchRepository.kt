@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface LocationSearchRepository {
-
     suspend fun getLocations(query: String): Flow<Result<List<Location>>>
 }
 

@@ -26,18 +26,8 @@ class ForecastRepositoryImp @Inject constructor(
                     emit(Success(forecast))
                 }
 
-                is Error -> emit(
-                    Error(
-                        code = result.code,
-                        message = result.message
-                    )
-                )
-
-                is Exception -> emit(
-                    Exception(
-                        e = result.e
-                    )
-                )
+                is Error -> emit(Error(code = result.code, message = result.message))
+                is Exception -> emit(Exception(e = result.e))
             }
         }
 

@@ -8,6 +8,7 @@ import com.linkjf.climita.domain.interactor.ForecastUseCase
 import com.linkjf.climita.domain.interactor.LocationSearchUseCase
 import com.linkjf.climita.domain.models.Forecast
 import com.linkjf.climita.domain.models.Location
+import com.linkjf.climita.presentation.ui.constants.Strings.emptyString
 import com.linkjf.climita.remote.common.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -30,7 +31,7 @@ class LocationSearchViewModel @Inject constructor(
     private val _showEmpty = MutableLiveData(false)
     val showEmpty: LiveData<Boolean> get() = _showEmpty
 
-    private val _query = MutableLiveData("")
+    private val _query = MutableLiveData(emptyString)
     val query: LiveData<String> get() = _query
 
     private val _forecast = MutableLiveData<Forecast>()
@@ -91,7 +92,7 @@ class LocationSearchViewModel @Inject constructor(
     }
 
     fun clear() {
-        _query.postValue("")
+        _query.postValue(/* value = */ emptyString)
         _locationPredictions.postValue(emptyList())
     }
 }

@@ -1,6 +1,9 @@
 package com.linkjf.climita.presentation.navigation
 
+import com.linkjf.climita.presentation.ui.constants.Strings.LocationSearchScreenRoute
+import com.linkjf.climita.presentation.ui.constants.Strings.SplashScreenRoute
+
 sealed class AppScreens(val route: String) {
-    object SplashScreen : AppScreens("splash_screen")
-    object LocationSearchScreen : AppScreens("location_search")
+    object SplashScreen : AppScreens(SplashScreenRoute)
+    object LocationSearchScreen : AppScreens(LocationSearchScreenRoute)
 }

@@ -28,18 +28,8 @@ class LocationSearchRepositoryImp @Inject constructor(
                 emit(Success(locationList))
             }
 
-            is Error -> emit(
-                Error(
-                    code = result.code,
-                    message = result.message
-                )
-            )
-
-            is Exception -> emit(
-                Exception(
-                    e = result.e
-                )
-            )
+            is Error -> emit(Error(code = result.code, message = result.message))
+            is Exception -> emit(Exception(e = result.e))
         }
     }
 

@@ -26,12 +26,22 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.linkjf.climita.R
 import com.linkjf.climita.domain.models.Forecast
 import com.linkjf.climita.domain.models.ForecastDay
+import com.linkjf.climita.presentation.ui.constants.Dimens.conditionContainerHorizontalPadding
+import com.linkjf.climita.presentation.ui.constants.Dimens.conditionIconSelectedSize
+import com.linkjf.climita.presentation.ui.constants.Dimens.conditionIconUnSelectedSize
+import com.linkjf.climita.presentation.ui.constants.Dimens.countryBottomPadding
+import com.linkjf.climita.presentation.ui.constants.Dimens.countryTopPadding
+import com.linkjf.climita.presentation.ui.constants.Dimens.forecastDayHorizontalPadding
+import com.linkjf.climita.presentation.ui.constants.Dimens.forecastVerticalPadding
+import com.linkjf.climita.presentation.ui.constants.Dimens.tempContainerPadding
+import com.linkjf.climita.presentation.ui.constants.Strings.forecastDateFormat
+import com.linkjf.climita.presentation.ui.constants.Strings.forecastDayDateFormat
+import com.linkjf.climita.presentation.ui.constants.Strings.temperatureFormat
 import com.linkjf.climita.presentation.ui.theme.white20
 import com.linkjf.climita.presentation.ui.theme.white50
 import java.text.SimpleDateFormat
@@ -42,12 +52,8 @@ import java.text.SimpleDateFormat
 fun ForecastView(
     forecast: Forecast,
 ) {
-
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-
+    val dateFormat = SimpleDateFormat(forecastDateFormat)
     var selectedIndex by remember { mutableIntStateOf(0) }
-
-
     val lazyListState = rememberLazyListState()
 
     Column(
@@ -66,9 +72,8 @@ fun ForecastView(
             forecast.location.country,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
-                .padding(top = 4.dp, bottom = 24.dp)
+                .padding(top = countryTopPadding, bottom = countryBottomPadding)
         )
-
 
         LazyColumn(
             state = lazyListState,
@@ -127,14 +132,13 @@ private fun ForecastItemView(
 
     val conditionSize =
         if (isSelected)
-            48.dp
+            conditionIconSelectedSize
         else
-            32.dp
-
+            conditionIconUnSelectedSize
 
     Row(
         modifier = Modifier
-            .padding(vertical = 4.dp)
+            .padding(vertical = forecastVerticalPadding)
             .fillMaxWidth()
             .background(color)
             .alpha(alpha)
@@ -147,47 +151,34 @@ private fun ForecastItemView(
 
     ) {
         val date = dateFormat.parse(forecastDay.date)
-        val dayString = DateFormat.format("EEE", date).toString().uppercase()
+        val dayString = DateFormat.format(forecastDayDateFormat, date).toString().uppercase()
         Text(
             text = dayString,
             style = dayTextStyle,
-            modifier = Modifier.padding(horizontal = 45.dp)
+            modifier = Modifier.padding(horizontal = forecastDayHorizontalPadding)
         )
         Column(
             modifier = Modifier
                 .fillMaxHeight()
-                .padding(vertical = 18.dp),
+                .padding(vertical = tempContainerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
 
-            val avgTemp = String.format(
-                stringResource(
-                    id = R.string.temperature_format,
-                    forecastDay.day.averageTemperature.toInt()
-                )
-            )
+            val avgTemp =
+                String.format(temperatureFormat, forecastDay.day.averageTemperature.toInt())
+
+            val minTemp =
+                String.format(temperatureFormat, forecastDay.day.minTemperature.toInt())
+
+            val maxTemp =
+                String.format(temperatureFormat, forecastDay.day.maxTemperature.toInt())
 
             Text(
                 text = avgTemp,
                 style = avgTempTextStyle,
                 modifier = Modifier
             )
-
-            val minTemp = String.format(
-                stringResource(
-                    id = R.string.temperature_format,
-                    forecastDay.day.minTemperature.toInt()
-                )
-            )
-
-            val maxTemp = String.format(
-                stringResource(
-                    id = R.string.temperature_format,
-                    forecastDay.day.maxTemperature.toInt()
-                )
-            )
-
             Text(
                 text = "${minTemp}/${maxTemp}",
                 style = minMaxTemTextStyle,
@@ -199,18 +190,17 @@ private fun ForecastItemView(
             modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth()
-                .padding(horizontal = 10.dp),
+                .padding(horizontal = conditionContainerHorizontalPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             GlideImage(
                 model = "https:${forecastDay.day.condition.icon}",
-                contentDescription = "Condition",
+                contentDescription = stringResource(id = R.string.condition_description),
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .width(conditionSize)
                     .height(conditionSize)
-
             )
             Text(
                 text = forecastDay.day.condition.text,
@@ -220,7 +210,5 @@ private fun ForecastItemView(
                 modifier = Modifier
             )
         }
-
-
     }
 }

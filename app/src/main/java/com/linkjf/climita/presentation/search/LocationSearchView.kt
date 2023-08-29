@@ -18,9 +18,6 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -29,13 +26,22 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.linkjf.climita.R
 import com.linkjf.climita.domain.models.Location
 import com.linkjf.climita.presentation.components.AutoCompleteUI
 import com.linkjf.climita.presentation.forecast.ForecastView
-import java.text.SimpleDateFormat
+import com.linkjf.climita.presentation.ui.constants.Dimens.emptyResultTextHorizontalPadding
+import com.linkjf.climita.presentation.ui.constants.Dimens.emptyResultTextVerticalPadding
+import com.linkjf.climita.presentation.ui.constants.Dimens.errorSnackBarPadding
+import com.linkjf.climita.presentation.ui.constants.Dimens.errorTextPadding
+import com.linkjf.climita.presentation.ui.constants.Dimens.forecastContainerTopPadding
+import com.linkjf.climita.presentation.ui.constants.Dimens.searchAppLogoHeight
+import com.linkjf.climita.presentation.ui.constants.Dimens.searchAppLogoWidth
+import com.linkjf.climita.presentation.ui.constants.Dimens.searchContainerHorizontalPadding
+import com.linkjf.climita.presentation.ui.constants.Dimens.searchContainerSpacerHeight
+import com.linkjf.climita.presentation.ui.constants.Dimens.searchContainerVerticalPadding
+import com.linkjf.climita.presentation.ui.constants.Dimens.searchResultPadding
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -44,9 +50,6 @@ fun LocationSearchView(
 ) {
 
     val keyboardController = LocalSoftwareKeyboardController.current
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-
-    var selectedIndex by remember { mutableIntStateOf(0) }
 
     val locationQuery by viewModel.query.observeAsState("")
     val showLoading by viewModel.isLoading.observeAsState(initial = false)
@@ -64,30 +67,29 @@ fun LocationSearchView(
             contentScale = ContentScale.FillBounds,
             contentDescription = null
         )
-
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(searchContainerSpacerHeight))
             Image(
                 painter = painterResource(id = R.drawable.ic_app_icon_transparent),
-                contentDescription = "Climita Logo",
+                contentDescription = stringResource(id = R.string.app_logo_description),
                 modifier = Modifier
-                    .height(60.dp)
-                    .width(50.dp)
+                    .height(searchAppLogoHeight)
+                    .width(searchAppLogoWidth)
             )
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        horizontal = 20.dp,
-                        vertical = 10.dp
+                        horizontal = searchContainerHorizontalPadding,
+                        vertical = searchContainerVerticalPadding
                     )
             ) {
 
                 Column(
-                    modifier = Modifier.padding(top = 120.dp)
+                    modifier = Modifier.padding(top = forecastContainerTopPadding)
                 ) {
                     forecast?.let {
                         ForecastView(forecast = it)
@@ -129,7 +131,7 @@ fun LocationSearchView(
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(8.dp)
+                                .padding(searchResultPadding)
                         )
                     }
 
@@ -149,7 +151,10 @@ private fun ShowEmptyResult(show: Boolean) {
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp, horizontal = 10.dp)
+                .padding(
+                    vertical = emptyResultTextVerticalPadding,
+                    horizontal = emptyResultTextHorizontalPadding
+                )
                 .background(Color.Transparent)
 
         )
@@ -160,7 +165,7 @@ private fun ShowError(show: Boolean) {
     if (show)
         Snackbar(
             modifier = Modifier
-                .padding(all = 8.dp),
+                .padding(all = errorSnackBarPadding),
             containerColor = Color.Red
         ) {
             Text(
@@ -168,7 +173,7 @@ private fun ShowError(show: Boolean) {
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = 8.dp)
+                    .padding(all = errorTextPadding)
             )
         }
 }

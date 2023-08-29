@@ -1,9 +1,7 @@
 package com.linkjf.climita.presentation.splash
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -14,10 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.linkjf.climita.R
 import com.linkjf.climita.presentation.navigation.AppScreens
+import com.linkjf.climita.presentation.ui.constants.Dimens.splashLogoHeight
+import com.linkjf.climita.presentation.ui.constants.Dimens.splashLogoWidth
 import kotlinx.coroutines.delay
 
 @Composable
@@ -33,7 +32,6 @@ fun SplashView(navController: NavHostController) {
 
 @Composable
 fun Splash() {
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -49,8 +47,8 @@ fun Splash() {
             painter = painterResource(id = R.drawable.ic_app_logo),
             contentDescription = "Climita Logo",
             modifier = Modifier
-                .height(270.dp)
-                .width(132.dp)
+                .height(splashLogoHeight)
+                .width(splashLogoWidth)
                 .align(Alignment.Center)
         )
     }

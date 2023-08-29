@@ -33,7 +33,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
+import com.linkjf.climita.presentation.ui.constants.Dimens.autoCompleteCornerSize
+import com.linkjf.climita.presentation.ui.constants.Dimens.autocompleteSeparator
+import com.linkjf.climita.presentation.ui.constants.Dimens.locationSeparatorThickness
+import com.linkjf.climita.presentation.ui.constants.Dimens.minHeightMultiplier
 import com.linkjf.climita.presentation.ui.theme.grey
 import com.linkjf.climita.presentation.ui.theme.grey80
 
@@ -70,10 +73,10 @@ fun <T> AutoCompleteUI(
                 onClearClick()
             }
         )
-        Divider(color = Color.Transparent, thickness = 10.dp)
+        Divider(color = Color.Transparent, thickness = autocompleteSeparator)
         LazyColumn(
             state = lazyListState,
-            modifier = modifier.heightIn(max = TextFieldDefaults.MinHeight * 6)
+            modifier = modifier.heightIn(max = TextFieldDefaults.MinHeight * minHeightMultiplier)
         ) {
             if (predictions.isNotEmpty()) {
                 items(predictions.size) { predictionIndex ->
@@ -88,7 +91,7 @@ fun <T> AutoCompleteUI(
                     ) {
                         itemContent(predictions[predictionIndex])
                     }
-                    Divider(color = grey80, thickness = 2.dp)
+                    Divider(color = grey80, thickness = locationSeparatorThickness)
                 }
             }
         }
@@ -118,7 +121,7 @@ fun QuerySearch(
             .onFocusChanged { focusState ->
                 showClearButton = focusState.isFocused
             },
-        shape = RoundedCornerShape(90.dp),
+        shape = RoundedCornerShape(autoCompleteCornerSize),
         value = query,
         onValueChange = onQueryChanged,
         label = { Text(text = label) },

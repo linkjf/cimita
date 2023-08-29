@@ -1,10 +1,11 @@
 package com.linkjf.climita.remote.repository
 
-import com.linkjf.climita.BuildConfig
 import com.linkjf.climita.data.models.LocationEntity
 import com.linkjf.climita.data.repository.LocationSearchRemote
 import com.linkjf.climita.remote.api.LocationSearchService
 import com.linkjf.climita.remote.common.Result
+import com.linkjf.climita.remote.common.Result.Error
+import com.linkjf.climita.remote.common.Result.Exception
 import com.linkjf.climita.remote.common.Result.Success
 import com.linkjf.climita.remote.common.safeRequest
 import com.linkjf.climita.remote.mapper.LocationEntityMapper
@@ -15,19 +16,20 @@ class LocationSearchRemoteImp @Inject constructor(
     private val locationEntityMapper: LocationEntityMapper
 ) : LocationSearchRemote {
     override suspend fun getLocations(query: String): Result<List<LocationEntity>> {
-        val apiKey = BuildConfig.WEATHER_API_KEY
         val result = safeRequest {
-            locationSearchService.searchLocation(apiKey, query)
+            locationSearchService.searchLocation(query)
         }
 
-        return if (result is Success) {
-            val modelList = result.data.map {
-                locationEntityMapper.mapFromModel(it)
+        return when (result) {
+            is Success -> {
+                val modelList = result.data.map {
+                    locationEntityMapper.mapFromModel(it)
+                }
+                Success(modelList)
             }
-            Success(modelList)
-        } else
-            Result.Error(-1, null)
+
+            is Error -> Error(code = result.code, message = result.message)
+            is Exception -> Exception(e = result.e)
+        }
     }
-
-
 }

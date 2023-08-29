@@ -1,6 +1,5 @@
 package com.linkjf.climita.remote.api
 
-import com.linkjf.climita.remote.models.LocationResponse
 import com.linkjf.climita.remote.models.LocationSearchResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -8,10 +7,9 @@ import retrofit2.http.Query
 
 interface LocationSearchService {
 
-    @GET("search.json")
+    @GET(LOCATION_SEARCH_REQUEST)
     suspend fun searchLocation(
-        @Query("key") key: String,
-        @Query("q") query: String
+        @Query(QUERY_REQUEST_PARAM) query: String
     ): Response<LocationSearchResponse>
 
 }

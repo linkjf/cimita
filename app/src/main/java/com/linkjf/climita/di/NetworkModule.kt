@@ -3,6 +3,7 @@ package com.linkjf.climita.di
 import com.linkjf.climita.BuildConfig
 import com.linkjf.climita.data.repository.ForecastRemote
 import com.linkjf.climita.data.repository.LocationSearchRemote
+import com.linkjf.climita.remote.api.API_KEY_REQUEST_PARAM
 import com.linkjf.climita.remote.api.ForecastService
 import com.linkjf.climita.remote.api.LocationSearchService
 import com.linkjf.climita.remote.repository.ForecastRemoteImp
@@ -28,6 +29,16 @@ object NetworkModule {
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+            .addInterceptor { chain ->
+                val originalRequest = chain.request()
+                val newUrl = originalRequest.url.newBuilder()
+                    .addQueryParameter(API_KEY_REQUEST_PARAM, BuildConfig.WEATHER_API_KEY)
+                    .build()
+                val newRequest = originalRequest.newBuilder()
+                    .url(newUrl)
+                    .build()
+                chain.proceed(newRequest)
+            }
             .build()
     }
 
