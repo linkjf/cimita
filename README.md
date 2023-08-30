@@ -54,7 +54,7 @@ To build and run Climita on your local machine, follow these steps:
 
 # Credits
 
-- Design by [Carlos Loaiza]()
+- Design by [Carlos Loaiza](https://www.behance.net/carlosloaizadiaz)
 - Design on [Figma](https://www.figma.com/file/B41LYYd8YbrnHtrNUx2pIO?type=design).
 
 ## License
