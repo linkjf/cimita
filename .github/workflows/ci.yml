@@ -2,17 +2,20 @@ name: Android CI
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "dev", "ci_impl" ]
   pull_request:
-    branches: [ "dev" ]
+    branches: [ "dev", "ci_impl" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      SECRET_WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+
     steps:
       - uses: actions/checkout@v3
-      - name: set up JDK 11
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: '17'
@@ -20,5 +23,11 @@ jobs:
           cache: gradle
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-      - name: Build app
-        run: ./gradlew assemble
+      - name: Build with Gradle
+        run: |
+          echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
+          echo "WEATHER_API_KEY=${{ env.SECRET_WEATHER_API_KEY }}" >> local.properties
+          ./gradlew build
+
+      - name: Run Test
+        run: ./gradlew test
