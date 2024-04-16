@@ -1,8 +1,8 @@
 object Versions {
 
-    const val androidApplicationPluginVersion = "8.1.1"
-    const val kotlinAndroidPluginVersion = "1.8.10"
-    const val daggerHiltAndroidPluginVersion = "2.44"
+    const val androidApplicationPluginVersion = "8.3.2"
+    const val kotlinAndroidPluginVersion = "1.9.23"
+    const val daggerHiltAndroidPluginVersion = "2.51.1"
 
     // Core dependencies
     const val coreKtxVersion = "1.10.1"
@@ -26,9 +26,9 @@ object Versions {
     const val androidCoroutineVersion = "1.6.4"
 
     // Hilt dependencies
-    const val daggerHiltPluginVersion = "2.44"
-    const val hiltAndroidVersion = "2.44"
-    const val hiltAndroidCompilerVersion = "2.44"
+    const val daggerHiltPluginVersion = "2.51.1"
+    const val hiltAndroidVersion = "2.51.1"
+    const val hiltAndroidCompilerVersion = "2.51.1"
     const val hiltNavigationCompose = "1.0.0"
 
     // Retrofit dependencies

@@ -2,8 +2,8 @@ object Config {
 
     object Android {
         const val androidMinSdkVersion = 21
-        const val androidTargetSdkVersion = 33
-        const val androidCompileSdkVersion = 33
+        const val androidTargetSdkVersion = 34
+        const val androidCompileSdkVersion = 34
     }
 
     object Plugins {
